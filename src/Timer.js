@@ -5,13 +5,24 @@ class Timer extends Component {
   state = {
     time: 0,
     color: '#'+Math.floor(Math.random()*16777215).toString(16)
-  }
+  };
 
-  // add your code here
+  // The componentDidMount method is often a good place to include setInterval or setTimeout functions, allowing you to delay something from happening on a component or cause some repeating change. Perfect for our timer app.
+// In the Timer component, there is already a method, clockTick, that handles updating the state. The state value, time, is then included in the render. We just need to set up an interval to call clockTick.
+// To create a setInterval, the best practice is to assign it to a variable within the scope of our class:
+// Write a componentDidMount that initializes an interval. Pass clockTick as the callback function and set it to 1000 to update every second:
+  componentDidMount() {
+    this.interval = setInterval(this.clockTick, 1000)
+  };
 
 
-
-
+  // clean up after ourselves when it comes to intervals. Not cleaning up can cause memory leaks (meaning that system memory is allocated to something that is no longer necessary and won't free up), as intervals can keep firing after a component unmounts.
+  // clear an interval, we use the built in clearInterval method, passing in the local variable:
+  // Write a componentWillUnmount method in Timer that cleans up the interval you've created:
+  componentWillUnmount() {
+    this.interval = clearInterval(this.interval);
+  };
+  
 
 
 
